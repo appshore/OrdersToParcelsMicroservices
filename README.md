@@ -20,9 +20,9 @@ then in a browser `http://localhost:3000`
 
 Getting started
 ---------------
-- `npm run dev`: Start development mode (load all services locally with hot-reload & REPL)
-- `npm run start`: Start production mode (set `SERVICES` env variable to load certain services)
-- `npm test`: Run tests & generate coverage report
+- `npm run dev`: Start development mode
+- `npm run start`: Start production mode
+- `npm test`: Run tests
 - `npm run dc:up`: Start the stack with Docker Compose
 - `npm run dc:down`: Stop the stack with Docker Compose
 
