@@ -25,3 +25,5 @@ Getting started
 - `npm test`: Run tests & generate coverage report
 - `npm run dc:up`: Start the stack with Docker Compose
 - `npm run dc:down`: Stop the stack with Docker Compose
+
+Check https://github.com/appshore/OrdersToParcels to see the same services running as Nodejs command line
