@@ -17,6 +17,7 @@ npm run dc:up
 ```
 then in a browser `http://localhost:3000`
 
+Traefik dashboard is accessible at `http://localhost:3001`
 
 Getting started
 ---------------
