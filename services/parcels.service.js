@@ -1,3 +1,5 @@
+'use strict';
+
 const { processOrder } = require('../src/orders')
 
 module.exports = {

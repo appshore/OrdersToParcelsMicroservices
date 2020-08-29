@@ -1,14 +1,14 @@
-'use strict'
+'use strict';
 
-const DbService = require('moleculer-db')
+// const DbService = require('moleculer-db');
 
-const orders = require('../data/orders.json').orders
+const orders = require('../data/orders.json').orders;
 
 module.exports = {
   name: 'orders',
-  mixins: [DbService],
+//   mixins: [DbService],
   settings: {
-    fields: ['id', 'date', 'items']
+    fields: ['id', 'date', 'items'],
   },
 
   // afterConnected() {
@@ -26,18 +26,18 @@ module.exports = {
      */
     get: {
       params: {
-        id: 'string'
+        id: 'string',
       },
       handler(ctx) {
-        return orders.find(o => o.id === ctx.params.id)
-      }
+        return orders.find((o) => o.id === ctx.params.id);
+      },
     },
 
     /**
      * get all orders
      */
     getAll() {
-      return orders
-    }
-  }
-}
+      return orders;
+    },
+  },
+};
