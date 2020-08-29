@@ -2,13 +2,24 @@ name: Auto tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
+
+env:
+  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  MERGE_LABELS: "automerge,!work in progress"
+  MERGE_REMOVE_LABELS: "automerge"
+  MERGE_METHOD: "squash"
+  MERGE_COMMIT_MESSAGE: "pull-request-description"
+  MERGE_FORKS: "false"
+  MERGE_RETRIES: "6"
+  MERGE_RETRY_SLEEP: "10000"
+  UPDATE_LABELS: ""
+  UPDATE_METHOD: "rebase"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,12 +27,14 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: |
-        npm ci
-        npm run build --if-present
-        npm test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          npm ci
+          npm run build --if-present
+          npm test
+      - name: Merge pull requests
+        uses: pascalgn/automerge-action@v0.9.0
