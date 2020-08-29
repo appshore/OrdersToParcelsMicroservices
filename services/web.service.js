@@ -30,7 +30,7 @@ module.exports = {
           '**',
         ],
         aliases: {
-            'GET greeter/:you': 'greeter.to',
+            'GET greeter/:you': 'greeter.welcome',
             'GET greeter': 'greeter.hello',
           },
       },
