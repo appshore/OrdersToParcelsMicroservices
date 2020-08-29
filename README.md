@@ -18,7 +18,7 @@ npm run dev
 ```
 then in a browser `http://localhost:3000`
 
-Traefik dashboard is accessible at `http://localhost:3001`
+Traefik dashboard is accessible at `http://localhost:4001`
 
 Getting started
 ---------------
