@@ -24,6 +24,7 @@ module.exports = {
      * @param {String} id - Item identifier
      */
     get: {
+      rest: 'GET /:id',
       params: {
         id: 'string',
       },
@@ -35,8 +36,11 @@ module.exports = {
     /**
      * get all items
      */
-    getAll() {
-      return items;
+    getAll: {
+      rest: 'GET /',
+      handler() {
+        return items;
+      },
     },
 
     /**
@@ -45,6 +49,7 @@ module.exports = {
      * @param {String} sort - Sort order true = ascending
      */
     getAllSortedByWeight: {
+      rest: 'GET /:sort',
       params: {
         sort: 'boolean',
       },

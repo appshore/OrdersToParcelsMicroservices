@@ -1,6 +1,6 @@
 'use strict';
 
-const { processOrder } = require('../src/orders')
+const { processOrder } = require('../src/orders');
 
 module.exports = {
   name: 'parcels',
@@ -8,31 +8,23 @@ module.exports = {
     /**
      * Set parcels for an order
      *
-     * @param {String} order_id - Order identifier
+     * @param {String} id - Order identifier
      */
     order: {
+      rest: 'GET /order/:id',
       params: {
-        id: 'string'
+        id: 'string',
       },
       async handler(ctx) {
         try {
-          let order = await ctx.call('orders.get', { id: ctx.params.id })
-          let items = await ctx.call('items.getAll')
-          return await processOrder(order, items)
+          return await processOrder(
+            await ctx.call('orders.get', { id: ctx.params.id }),
+            await ctx.call('items.getAll')
+          );
         } catch (err) {
-          console.error('Parcels err get order', err)
+          console.error('Parcels get order', err);
         }
-      }
-    }
+      },
+    },
   },
-
-  /**
-   * Events
-   */
-  events: {},
-
-  /**
-   * Methods
-   */
-  methods: {}
-}
+};

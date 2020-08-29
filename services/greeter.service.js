@@ -4,16 +4,6 @@ module.exports = {
   name: 'greeter',
 
   /**
-   * Service settings
-   */
-  settings: {},
-
-  /**
-   * Service dependencies
-   */
-  dependencies: [],
-
-  /**
    * Actions
    */
   actions: {
@@ -22,8 +12,11 @@ module.exports = {
      *
      * @returns
      */
-    hello() {
-      return 'Hello Parcels!';
+    hello: {
+      rest: 'GET /',
+      handler() {
+        return 'Hello Parcels!';
+      },
     },
     /**
      * get an item
@@ -31,6 +24,7 @@ module.exports = {
      * @param {String} id - Item identifier
      */
     welcome: {
+      rest: 'GET /:you',
       params: {
         you: 'string',
       },

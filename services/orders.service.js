@@ -22,6 +22,7 @@ module.exports = {
      * @param {String} id - Order identifier
      */
     get: {
+      rest: 'GET /:id',
       params: {
         id: 'string',
       },
@@ -33,8 +34,11 @@ module.exports = {
     /**
      * get all orders
      */
-    getAll() {
-      return orders;
+    getAll: {
+      rest: 'GET /',
+      handler() {
+        return orders;
+      },
     },
   },
 };
