@@ -28,12 +28,12 @@ module.exports = {
      *
      * @param {String} id - Item identifier
      */
-    to: {
+    welcome: {
       params: {
         you: 'string',
       },
       handler(ctx) {
-        return `Hello ${ctx.params.you}!`;
+        return `Welcome ${ctx.params.you}!`;
       },
     },
   },
