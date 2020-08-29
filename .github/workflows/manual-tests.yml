@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Manual tests
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -10,7 +10,7 @@ on:
     inputs:
       name:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Run manual test'
+        description: 'Run manual tests'
         # Default value if no value is explicitly provided
         default: 'Yes'
         # Input has to be provided for the workflow to run
@@ -18,7 +18,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
 
     strategy:
