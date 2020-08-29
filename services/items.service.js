@@ -1,16 +1,16 @@
-'use strict'
+'use strict';
 
 // const DbService = require('moleculer-db')
 
-const items = require('../data/items.json').items
+const items = require('../data/items.json').items;
 
-const { sortItemsByWeight } = require('../src/items')
+const { sortItemsByWeight } = require('../src/items');
 
 module.exports = {
   name: 'items',
   // mixins: [DbService],
   settings: {
-    fields: ['id', 'name', 'weight']
+    fields: ['id', 'name', 'weight'],
   },
 
   // afterConnected() {
@@ -28,18 +28,18 @@ module.exports = {
      */
     get: {
       params: {
-        id: 'string'
+        id: 'string',
       },
       handler(ctx) {
-        return items.find(o => o.id === ctx.params.id)
-      }
+        return items.find((o) => o.id === ctx.params.id);
+      },
     },
 
     /**
      * get all items
      */
     getAll() {
-      return items
+      return items;
     },
 
     /**
@@ -49,11 +49,11 @@ module.exports = {
      */
     getAllSortedByWeight: {
       params: {
-        sort: 'boolean'
+        sort: 'boolean',
       },
       handler(ctx) {
-        return sortItemsByWeight(items, ctx.params.sort)
-      }
-    }
-  }
-}
+        return sortItemsByWeight(items, ctx.params.sort);
+      },
+    },
+  },
+};
