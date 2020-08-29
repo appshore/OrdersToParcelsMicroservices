@@ -1,13 +1,14 @@
-FROM node:8-alpine
-
-ENV NODE_ENV=production
+FROM node:12
 
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+ENV NODE_ENV=production
+
+COPY package*.json ./
 
 RUN npm install --production
+# RUN npm install --silent --progress=false --production
 
 COPY . .
 

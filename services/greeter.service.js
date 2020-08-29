@@ -21,7 +21,20 @@ module.exports = {
      * @returns
      */
     hello() {
-      return 'Hello Parcels!'
-    }
-  }
-}
+      return 'Hello Parcels!';
+    },
+    /**
+     * get an item
+     *
+     * @param {String} id - Item identifier
+     */
+    to: {
+      params: {
+        you: 'string',
+      },
+      handler(ctx) {
+        return `Hello ${ctx.params.you}!`;
+      },
+    },
+  },
+};

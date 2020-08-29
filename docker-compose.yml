@@ -1,25 +1,50 @@
 version: "3.0"
 
 services:
+  nats:
+    image: nats
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    restart: unless-stopped
 
-  api:
+  traefik:
+    image: "traefik"
+    container_name: "traefik"
+    restart: unless-stopped
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "4000:80"
+      - "4001:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik.toml:/etc/traefix/traefik.toml"
+
+  web:
     build:
       context: .
     image: microservice
     env_file: docker-compose.env
     environment:
-      SERVICES: api
+      SERVICES: web
       PORT: 3000
     links:
       - nats
     depends_on:
       - nats
     labels:
-      - "traefik.enable=true"   
-      - "traefik.backend=api"
+      - "traefik.enable=true"
+      - "traefik.backend=web"
       - "traefik.port=3000"
       - "traefik.frontend.entryPoints=http"
       - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
 
   greeter:
     build:
@@ -27,12 +52,19 @@ services:
     image: microservice
     env_file: docker-compose.env
     environment:
-      SERVICES:
-        greeter
+      SERVICES: greeter
     links:
       - nats
     depends_on:
       - nats
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=greeter"
+      - "traefik.port=3000"
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.frontend.rule=PathPrefix:/greeter"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
 
   items:
     build:
@@ -40,8 +72,7 @@ services:
     image: microservice
     env_file: docker-compose.env
     environment:
-      SERVICES:
-        items
+      SERVICES: items
     links:
       - nats
     depends_on:
@@ -53,8 +84,7 @@ services:
     image: microservice
     env_file: docker-compose.env
     environment:
-      SERVICES:
-        orders
+      SERVICES: orders
     links:
       - nats
     depends_on:
@@ -66,23 +96,8 @@ services:
     image: microservice
     env_file: docker-compose.env
     environment:
-      SERVICES:
-        parcels
+      SERVICES: parcels
     links:
       - nats
     depends_on:
       - nats
-
-
-  nats:
-    image: nats
-
-  traefik:
-    image: traefik
-    command: --web --docker --docker.domain=docker.localhost --logLevel=INFO --docker.exposedbydefault=false
-    ports:
-      - "3000:80"
-      - "3001:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /dev/null:/traefik.toml
