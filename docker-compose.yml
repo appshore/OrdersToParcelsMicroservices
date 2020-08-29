@@ -25,13 +25,13 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik.toml:/etc/traefix/traefik.toml"
 
-  web:
+  rest:
     build:
       context: .
     image: microservice
     env_file: docker-compose.env
     environment:
-      SERVICES: web
+      SERVICES: rest
       PORT: 3000
     links:
       - nats
@@ -39,12 +39,12 @@ services:
       - nats
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=web"
+      - "traefik.backend=rest"
       - "traefik.port=3000"
       - "traefik.frontend.entryPoints=http"
       - "traefik.frontend.rule=PathPrefix:/"
       - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.whoami.entrypoints=rest"
 
   greeter:
     build:
