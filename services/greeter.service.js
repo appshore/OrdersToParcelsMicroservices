@@ -14,8 +14,23 @@ module.exports = {
      */
     hello: {
       rest: 'GET /',
-      handler() {
-        return 'Hello Parcels!';
+      handler(ctx) {
+        // ctx.meta.$responseType = 'text/html';
+        ctx.meta.$responseHeaders = {
+          'Content-Type': 'text/html; charset=UTF-8',
+        };
+        return `
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <meta charset="UTF-8" />
+                    <title>Orders and Parcels Micro Services</title>
+                </head>
+                <body>
+                    <h1>Welcome to Orders and Parcels!</h1>
+                </body>
+            </html>
+        `;
       },
     },
     /**
@@ -29,7 +44,22 @@ module.exports = {
         you: 'string',
       },
       handler(ctx) {
-        return `Welcome ${ctx.params.you}!`;
+        ctx.meta.$responseType = 'text/html';
+        // ctx.meta.$responseHeaders = {
+        //   'Content-Type': 'text/html; charset=UTF-8',
+        // };
+        return `
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <meta charset="UTF-8" />
+                    <title>Orders and Parcels Micro Services</title>
+                </head>
+                <body>
+                    <h1>Welcome ${ctx.params.you}!</h1>
+                </body>
+            </html>
+        `;
       },
     },
   },
