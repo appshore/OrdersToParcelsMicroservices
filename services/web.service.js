@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
-const ApiGateway = require('moleculer-web')
+const ApiGateway = require('moleculer-web');
 
 module.exports = {
-  name: 'api',
+  name: 'web',
   mixins: [ApiGateway],
 
   // More info about settings: https://moleculer.services/docs/0.13/moleculer-web.html
@@ -14,24 +14,31 @@ module.exports = {
       {
         path: '/api',
         whitelist: [
-          // Access to any actions in all services under "/api" URL
-          '**'
+          '**',
         ],
         aliases: {
-          // 'REST items': 'items',
           'GET items/:id': 'items.get',
           'GET items': 'items.getAll',
-          // 'REST orders': 'orders',
           'GET orders/:id': 'orders.get',
           'GET orders': 'orders.getAll',
-          'GET parcels/order/:id': 'parcels.order'
-        }
-      }
+          'GET parcels/order/:id': 'parcels.order',
+        },
+      },
+      {
+        path: '/',
+        whitelist: [
+          '**',
+        ],
+        aliases: {
+            'GET greeter/:you': 'greeter.to',
+            'GET greeter': 'greeter.hello',
+          },
+      },
     ],
 
     // Serve assets from "public" folder
     assets: {
-      folder: 'public'
-    }
-  }
-}
+      folder: 'public',
+    },
+  },
+};
