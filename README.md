@@ -14,6 +14,7 @@ Docker must be installed first
 ```
 npm install
 npm run dc:up
+npm run dev
 ```
 then in a browser `http://localhost:3000`
 
