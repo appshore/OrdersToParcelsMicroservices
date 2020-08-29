@@ -1,58 +1,55 @@
-const { setParcelsUniqId } = require('./parcels')
+'use strict';
 
-const { sortByDate } = require('./sort')
-const { parcelsByOrder } = require('./parcels')
+const { sortByDate } = require('./sort');
+const { parcelsByOrder, setParcelsUniqId } = require('./parcels');
 
 // list all orders
 // ordersSort = true => clockwise
-const sortOrdersByDate = (orders, ordersSort = true) =>
-  orders.sort((a, b) => sortByDate(a.date, b.date, ordersSort))
+const sortOrdersByDate = (orders, ordersSort = true) => orders.sort((a, b) => sortByDate(a.date, b.date, ordersSort));
 
 // retrieve each item in an order
 const itemsByOrder = (order, items) => {
   // retrieve each item in the order from the items list
   let its = order.items.reduce((acc, item) => {
-    let it = items.find(is => is.id === item.item_id)
+    let it = items.find((is) => is.id === item.item_id);
     for (let i = 0; i < item.quantity; i++) {
-      acc = acc.concat(it)
+      acc = acc.concat(it);
     }
-    return acc
-  }, [])
+    return acc;
+  }, []);
 
   return {
     id: order.id,
     date: order.date,
-    items: its
-  }
-}
+    items: its,
+  };
+};
 
 // Weight by order
 // work with items or parcels
-const weightByOrder = entities =>
-  entities.reduce((acc, entity) => acc + parseFloat(entity.weight), 0.0)
+const weightByOrder = (entities) => entities.reduce((acc, entity) => acc + parseFloat(entity.weight), 0.0);
 
 // Revenue by order
 // sum of each parcel
-const revenueByOrder = parcels =>
-  parcels.reduce((acc, parcel) => acc + parseFloat(parcel.revenue), 0.0)
+const revenueByOrder = (parcels) => parcels.reduce((acc, parcel) => acc + parseFloat(parcel.revenue), 0.0);
 
 // process one order
 const processOrder = async (order, items) => {
   // retrieve each unique item
-  let itemsOrder = itemsByOrder(order, items)
+  let itemsOrder = itemsByOrder(order, items);
 
   // define the parcels for each order
-  let parcelsOrder = parcelsByOrder(itemsOrder)
+  let parcelsOrder = parcelsByOrder(itemsOrder);
 
   // setParcelsUniqId return an array of promises
   // so we wait for them to resolve
-  parcelsOrder = await setParcelsUniqId(parcelsOrder)
+  parcelsOrder = await setParcelsUniqId(parcelsOrder);
 
   // compute order global information
-  let itemsQty = itemsOrder.items.length
-  let parcelsQty = parcelsOrder.length
-  let weight = weightByOrder(parcelsOrder)
-  let revenue = revenueByOrder(parcelsOrder)
+  let itemsQty = itemsOrder.items.length;
+  let parcelsQty = parcelsOrder.length;
+  let weight = weightByOrder(parcelsOrder);
+  let revenue = revenueByOrder(parcelsOrder);
 
   /*
     // uncomment to have a console output of each order
@@ -81,15 +78,15 @@ const processOrder = async (order, items) => {
     parcelsQty,
     revenue,
     weight: parseFloat(weight.toFixed(2)),
-    parcels: parcelsOrder
-  }
-}
+    parcels: parcelsOrder,
+  };
+};
 
 // main fct that process all orders
 const processOrders = async (orders, items) => {
   // map the orders array which returns an array of promises
-  return await Promise.all(orders.map(async order => processOrder(order, items)))
-}
+  return await Promise.all(orders.map(async (order) => processOrder(order, items)));
+};
 
 module.exports = {
   sortOrdersByDate,
@@ -97,5 +94,5 @@ module.exports = {
   weightByOrder,
   revenueByOrder,
   processOrder,
-  processOrders
-}
+  processOrders,
+};
