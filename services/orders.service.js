@@ -1,12 +1,9 @@
 'use strict';
 
-// const DbService = require('moleculer-db');
-
 const orders = require('../data/orders.json').orders;
 
 module.exports = {
   name: 'orders',
-//   mixins: [DbService],
   settings: {
     fields: ['id', 'date', 'items'],
   },

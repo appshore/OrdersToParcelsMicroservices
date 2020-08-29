@@ -1,14 +1,11 @@
 'use strict';
 
-// const DbService = require('moleculer-db')
-
 const items = require('../data/items.json').items;
 
 const { sortItemsByWeight } = require('../src/items');
 
 module.exports = {
   name: 'items',
-  // mixins: [DbService],
   settings: {
     fields: ['id', 'name', 'weight'],
   },
