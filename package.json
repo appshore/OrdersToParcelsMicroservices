@@ -37,7 +37,7 @@
     "moleculer": "^0.14.10",
     "moleculer-web": "^0.9.1",
     "nats": "^1.4.12",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "util": "^0.12.3"
   },
   "jest": {
